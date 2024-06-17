@@ -1,41 +1,117 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Header from './Header'
-import { Link } from 'react-router-dom'
+import { Link,  useNavigate } from 'react-router-dom'
+import { checkValidData } from '../utils/validFromData'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword ,updateProfile } from "firebase/auth";
+import { auth } from '../utils/firebaseValidation'
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
+  const dispatch = useDispatch()
+  
+  const navigate = useNavigate()
+  const [isSignIn, setIsSignIn] = useState(true);
+  const [errormessage, setErrorMessage] = useState(null);
 
-   const[isSignIn,setIsSignIn]= useState(true);
+  const email = useRef(null);
+  const password = useRef(null)
+  const displayName = useRef()
 
-   const toggleSignInForm = ()=>{
-         setIsSignIn(!isSignIn)
-   }
+  const toggleSignInForm = () => {
+    setIsSignIn(!isSignIn)
+  }
+
+  const handleButtonClick = () => {
+    const message = checkValidData(email.current.value, password.current.value);
+    setErrorMessage(message);
+
+    if (message) return;
+
+    if (!isSignIn) {
+      // Sign up logic
+
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then((userCredential) => {
+          
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: displayName.current.value,
+          }).then(() => {
+            // Profile updated!
+            const{uid,email,displayName}=auth.currentUser;
+            dispatch(addUser({uid:uid,email:email,displayName:displayName}));
+            navigate("/browse")
+            // ...
+          }).catch((error) => {
+            // An error occurred
+            // ...
+          });
+         
+          // console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+          // ..
+        });
+    }
+    else {
+      // sign in logic
+      signInWithEmailAndPassword(auth,email.current.value, password.current.value)
+        .then((userCredential) => {
+          
+          const user = userCredential.user;
+          // console.log(user);
+          navigate("/browse")
+          const{uid,email,displayName}=user;
+          dispatch(addUser({uid:uid,email:email,displayName:displayName}));
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+
+    }
+  }
+
   return (
     <div >
-          <Header/>
-          <div className=' absolute  '>
-              <img src='https://assets.nflxext.com/ffe/siteui/vlv3/cacfadb7-c017-4318-85e4-7f46da1cae88/e43aa8b1-ea06-46a5-abe3-df13243e718d/IN-en-20240603-popsignuptwoweeks-perspective_alpha_website_large.jpg' alt='bg-image'/>
-          </div>
+      <Header />
+      <div className=' absolute  '>
+        <img src='https://assets.nflxext.com/ffe/siteui/vlv3/cacfadb7-c017-4318-85e4-7f46da1cae88/e43aa8b1-ea06-46a5-abe3-df13243e718d/IN-en-20240603-popsignuptwoweeks-perspective_alpha_website_large.jpg' alt='bg-image' />
+      </div>
 
-           {/* sign In from */}
+      {/* sign In from */}
 
-           <div className='bg-black w-4/12 relative mx-auto top-20 opacity-[80%] rounded-md'> 
-           
-                <form className='flex flex-col p-12 text-white'>
-                         <h3 className='text-3xl font-bold my-4'>{isSignIn ?"Sign In" : "Sign up"}</h3>
-                         {
-                          !isSignIn && <input type='text' placeholder='Full Name' className='  bg-black border border-gray-400  px-4 py-3 rounded-md'/>
-                         }
+      <div className='bg-black w-4/12 relative mx-auto top-20 opacity-[80%] rounded-md'>
 
-                         <input type='text' placeholder='Email Address' className='  bg-black border border-gray-400 my-4 px-4 py-3 rounded-md'/>
+        <form onSubmit={(e) => e.preventDefault()} className='flex flex-col p-12 text-white'>
+          <h3 className='text-3xl font-bold my-4'>{isSignIn ? "Sign In" : "Sign up"}</h3>
+          {
+            !isSignIn && <input ref={displayName} type='text' placeholder='Full Name' className='  bg-black border border-gray-400  px-4 py-3 rounded-md' required={true} />
+          }
 
-                         <input type='password' placeholder='Password' className='  bg-black border border-gray-400 mb-4 px-4 py-3 rounded-md'/>
+          <input ref={email} type='text' placeholder='Email Address' className='  bg-black border border-gray-400 my-4 px-4 py-3 rounded-md' required={true} />
 
-                         <button className=' bg-red-600   rounded-md py-2 opacity-[100%] text-white font-semibold '>{isSignIn ?"Sign In" : "Sign up"}</button>
 
-                         <h3 className=' my-5'> {isSignIn ? "New to Netflix?":"Already have an account?" }<Link><span onClick={toggleSignInForm} className='text-white font-semibold ml-2 hover:underline'>{isSignIn ?"Sign up" : "Sign In"}.</span></Link></h3>
+          <input ref={password} type='password' placeholder='Password' className='  bg-black border border-gray-400 mb-4 px-4 py-3 rounded-md' required={true} />
 
-                </form>
-           </div>
+
+          <p className=' text-red-600 mb-1 px-2  font-normal'> {errormessage}</p>
+
+
+          <button onClick={handleButtonClick} className=' bg-red-600   rounded-md py-2 opacity-[100%] text-white font-semibold '>{isSignIn ? "Sign In" : "Sign up"} </button>
+
+          <h3 className=' my-5'> {isSignIn ? "New to Netflix?" : "Already have an account?"}<Link><span onClick={toggleSignInForm} className='text-white font-semibold ml-2 hover:underline'>{isSignIn ? "Sign up" : "Sign In"}.</span></Link></h3>
+
+        </form>
+      </div>
     </div>
   )
 }
