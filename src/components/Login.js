@@ -43,20 +43,19 @@ const Login = () => {
             const{uid,email,displayName}=auth.currentUser;
             dispatch(addUser({uid:uid,email:email,displayName:displayName}));
           
-            // ...
+          
           }).catch((error) => {
-            // An error occurred
-            // ...
+            
           });
          
-          // console.log(user);
-          // ...
+          
+          
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorCode + "-" + errorMessage);
-          // ..
+          
         });
     }
     else {
@@ -65,12 +64,12 @@ const Login = () => {
         .then((userCredential) => {
           
           const user = userCredential.user;
-          // console.log(user);
+         
           
           const{uid,email,displayName}=user;
           dispatch(addUser({uid:uid,email:email,displayName:displayName}));
 
-          // ...
+          
         })
         .catch((error) => {
           const errorCode = error.code;

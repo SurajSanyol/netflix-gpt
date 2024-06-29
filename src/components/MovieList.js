@@ -5,7 +5,7 @@ const MovieList = ({ title, movies }) => {
 
   if (!movies) return;
 
-  console.log(movies);
+
 
   return (
     <div className=' w-screen '>

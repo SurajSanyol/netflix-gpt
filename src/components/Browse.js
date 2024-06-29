@@ -1,19 +1,19 @@
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import Header from './Header'
-import { API,API_OPTION } from '../utils/constant';
-import { useDispatch } from 'react-redux';
-import { addNowplayingMovie } from '../utils/movieSlice';
+import {  useSelector } from 'react-redux';
 import MainContainer from './MainContainer';
 import Secondary from './Secondary';
 import useUpcommingMovie from '../hooks/useUpcommingMovie';
 import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
 import usePopularMovies from '../hooks/usePopularMovies';
 import useTopratedMovies from '../hooks/useTopratedMovies';
+import GptSearchPage from './GptSearchPage';
 
 const Browse = () => {
 
- 
+  const GptSearchVal = useSelector(store => store.gpt.gptSearch);
+
   useNowPlayingMovies();
 
   useUpcommingMovie();
@@ -25,8 +25,12 @@ const Browse = () => {
   return (
     <div className=' overflow-x-hidden' >
       <Header />
-      <MainContainer/>
-      <Secondary/>
+
+      {
+        GptSearchVal ? (<GptSearchPage />) : <><MainContainer />
+          <Secondary /></>
+      }
+
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { addUpcommingMovie } from '../utils/movieSlice';
 const useUpcommingMovie = () => {
       
     const dispatch = useDispatch();
+    const upcommingMovie = useSelector(store => store.movie.upCommingMovie);
      
       const getUpcommingMovie = async ()=>{
            const data = await fetch('https://api.themoviedb.org/3/movie/upcoming?page=1',API_OPTION);
@@ -14,7 +15,7 @@ const useUpcommingMovie = () => {
       }
 
       useEffect(()=>{
-         getUpcommingMovie();
+       !upcommingMovie &&  getUpcommingMovie();
       },[])
 }
 
