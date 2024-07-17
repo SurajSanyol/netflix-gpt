@@ -1,15 +1,14 @@
 {
     "name": "netflix_gpt",
     "version": 2,
-    "builds": [
+    "routes": [
       {
-        "src": "index.html",
-        "use": "@vercel/static"
+        "src": "/(.*)",
+        "dest": "/index.js"
       }
-    ],
-    "rewrites":  [
-       {"source": "/(.*)", "destination": "/"}
     ]
 
   }
+  
+
   
