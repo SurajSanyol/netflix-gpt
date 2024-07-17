@@ -6,10 +6,10 @@ const MovieCard = ({posterpath}) => {
   if(!posterpath) return;
    
   return (
-    <div className='w-48 pr-4'>
-        <img className=' rounded-md' src={Img_CDN_URL+posterpath} alt='poster'/>
+    <div className='w-48 pr-4 '>
+        <img className=' rounded-md  cursor-pointer transition duration-500  hover:scale-125 ease-out' src={Img_CDN_URL+posterpath} alt='poster'/>
     </div>
   )
 }
-
+ 
 export default MovieCard

@@ -1,13 +1,14 @@
 import React from 'react'
 import GptSearchBar from './GptSearchBar'
-import { BG_IMG } from '../utils/constant'
 import SuggestionMovieList from './SuggestionMovieList'
+import bg from '../Assets/background.jpg'
 
 const GptSearchPage = () => {
   return (
+
     <div>   
             <div className=' fixed -z-20'>
-                <img className='w-screen h-screen object-cover' src={BG_IMG} alt='bg-image' />
+                <img className='w-screen h-screen object-cover' src={bg} alt='background' loading=' lazy' />
             </div>
            <GptSearchBar/>
            <SuggestionMovieList/>

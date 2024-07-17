@@ -54,7 +54,7 @@ const Header = () => {
   }
 
   return (
-    <div className={` absolute px-10 py-2 z-10 flex  sm:flex-row flex-col   justify-between w-full  ${(user && !GptSearchVal) && ' bg-black sm:bg-blue-900 '}  ` }>
+    <div className={` absolute px-10 py-2 z-10 flex  sm:flex-row flex-col   justify-between w-full  ${(user && !GptSearchVal) && ' bg-black '}  ` }>
       <img className='w-40 sm:mx-0 mx-auto' src={LOGO} alt='logo' />
 
 

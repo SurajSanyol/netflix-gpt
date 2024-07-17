@@ -9,6 +9,8 @@ import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
 import usePopularMovies from '../hooks/usePopularMovies';
 import useTopratedMovies from '../hooks/useTopratedMovies';
 import GptSearchPage from './GptSearchPage';
+import useTrendingMovie from '../hooks/useTrendingMovies';
+import useTrendingTvShow from '../hooks/useTrendingTvShow';
 
 const Browse = () => {
 
@@ -20,6 +22,8 @@ const Browse = () => {
 
   usePopularMovies();
   useTopratedMovies();
+  useTrendingMovie();
+  useTrendingTvShow()
 
 
   return (
