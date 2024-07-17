@@ -2,10 +2,8 @@
     "name": "netflix_gpt",
     "version": 2,
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/index.js"
-      }
+      
+      {"source": "/(.*)", "destination": "/"}
     ]
 
   }
