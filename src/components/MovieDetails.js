@@ -26,11 +26,11 @@ const MovieDetails = () => {
     return (
         <div className='w-screen h-screen'>
             {/* <Header/> */}
-            <img className ='w-screen h-[100%] -z-20 absolute opacity-[60%] ' src={'https://image.tmdb.org/t/p/w500'+movieDetails?.backdrop_path}/>
+            <img className ='w-screen h-[100%] -z-20 absolute opacity-[60%] ' src={'https://image.tmdb.org/t/p/w500'+movieDetails?.backdrop_path} loading="eager" />
 
             <div className='flex flex-row  gap-x-2  py-10 h-[100vh]  bg-black opacity-[79%] -z-40'>
                 <div className=' w-[30%] mx-auto px-10 z-10'>
-                    <img className=' rounded-md ' src={"https://image.tmdb.org/t/p/w300" + movieDetails?.poster_path} alt='background' />
+                    <img className=' rounded-md ' src={"https://image.tmdb.org/t/p/w300" + movieDetails?.poster_path} alt='background'  />
                 </div>
 
                 <div className=' w-[67%] '>
