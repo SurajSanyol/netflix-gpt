@@ -27,3 +27,6 @@ export const user_img = "https://wallpapers.com/images/hd/netflix-profile-pictur
 
 
 export const Search_Query_MOVIE ="https://api.themoviedb.org/3/search/movie?query=Dhoom&include_adult=false&language=en-US&page=1"
+
+
+export const Search_MovieBy_ID = ""

@@ -21,11 +21,6 @@ const VideoBackground = ({ movieId }) => {
       >
       </iframe>
 
-
-
-
-
-
     </div>
   )
 }

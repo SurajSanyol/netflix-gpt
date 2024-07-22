@@ -11,10 +11,13 @@ import useTopratedMovies from '../hooks/useTopratedMovies';
 import GptSearchPage from './GptSearchPage';
 import useTrendingMovie from '../hooks/useTrendingMovies';
 import useTrendingTvShow from '../hooks/useTrendingTvShow';
+import MovieDetails from './MovieDetails';
+
 
 const Browse = () => {
 
   const GptSearchVal = useSelector(store => store.gpt.gptSearch);
+  const movieTogglepage = useSelector(store=>store.movie.moviePage);
 
   useNowPlayingMovies();
 
@@ -31,8 +34,9 @@ const Browse = () => {
       <Header />
 
       {
-        GptSearchVal ? (<GptSearchPage />) : <><MainContainer />
-          <Secondary /></>
+         GptSearchVal ? (<GptSearchPage />) : <><MainContainer />
+        <Secondary /></>
+       
       }
 
     </div>
